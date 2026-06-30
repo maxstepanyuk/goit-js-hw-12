@@ -6,7 +6,10 @@ import {
   clearGallery,
   createGallery,
   hideLoader,
+  hideLoadMoreButton,
   showLoader,
+  showLoadMoreButton,
+  loadMoreButton,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
