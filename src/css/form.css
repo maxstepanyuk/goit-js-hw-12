@@ -18,7 +18,7 @@
   border: 1px solid #808080;
 }
 
-.form button {
+button {
   padding: 8px;
 
   display: flex;
@@ -44,7 +44,7 @@
 
 }
 
-.form button:hover {
+button:hover {
   background-color: #6c8cff;
 }
 
