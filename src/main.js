@@ -10,6 +10,8 @@ import {
   showLoader,
   showLoadMoreButton,
   loadMoreButton,
+  showCantLoadMore,
+  hideCantLoadMore,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
@@ -91,8 +93,10 @@ async function createNewPage() {
 
     if (currentPage < totalPages) {
       showLoadMoreButton();
+      hideCantLoadMore();
     } else {
       hideLoadMoreButton();
+      showCantLoadMore();
     }
   } catch (e) {
     console.log('Error on handleLoadMoreButton', e);

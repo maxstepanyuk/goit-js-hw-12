@@ -3,6 +3,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const loader = document.querySelector('.loader');
 const gallery = document.querySelector('.gallery');
+const cantLoadMore = document.querySelector('.cant-load-more');
 export const loadMoreButton = document.querySelector('.load-more');
 
 const gallerySimpleLightboxOptions = {
@@ -78,4 +79,12 @@ export function showLoadMoreButton() {
 
 export function hideLoadMoreButton() {
   loadMoreButton.classList.add('hidden');
+}
+
+export function showCantLoadMore() {
+  cantLoadMore.classList.remove('hidden');
+}
+
+export function hideCantLoadMore() {
+  cantLoadMore.classList.add('hidden');
 }
