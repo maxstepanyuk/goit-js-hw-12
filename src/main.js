@@ -30,79 +30,17 @@ async function onSerchSubmit(event) {
     showToast('empty search', 'error');
     return;
   }
+  debugger;
 
   clearGallery();
-  showLoader();
   currentPage = 1;
-
-  try {
-    const { hits: images, totalHits: totalImages } = await getImagesByQuery(
-      searchText,
-      currentPage
-    );
-
-    if (images.length <= 0) {
-      showToast(
-        'Sorry, there are no images matching your search query. Please try again!',
-        'warning'
-      );
-    } else {
-      createGallery(images);
-    }
-
-    const totalPages = Math.ceil(totalImages / ITEMS_PER_PAGE);
-
-    if (currentPage < totalPages) {
-      showLoadMoreButton();
-    } else {
-      hideLoadMoreButton();
-    }
-  } catch (e) {
-    console.log('Error on getImagesByQuery', e);
-    showToast(
-      'Sorry, there was an error getting images. Please try again!',
-      'error'
-    );
-  } finally {
-    hideLoader();
-  }
+  await createNewPage();
 }
 
 async function handleLoadMoreButton(event) {
+  debugger;
   currentPage++;
-
-  showLoader();
-
-  try {
-    const { hits: images, totalHits: totalImages } = await getImagesByQuery(
-      searchText,
-      currentPage
-    );
-    if (images.length <= 0) {
-      showToast(
-        'Sorry, there are no images matching your search query. Please try again!',
-        'warning'
-      );
-    } else {
-      createGallery(images);
-    }
-
-    const totalPages = Math.ceil(totalImages / ITEMS_PER_PAGE);
-    if (totalPages > currentPage) {
-      showLoadMoreButton();
-    } else {
-      hideLoadMoreButton();
-    }
-  } catch (e) {
-    console.log('Error on handleLoadMoreButton', e);
-    showToast(
-      'Sorry, there was an error getting images. Please try again!',
-      'error'
-    );
-    hideLoadMoreButton();
-  } finally {
-    hideLoader();
-  }
+  await createNewPage();
 }
 
 export function showToast(message, type = 'success') {
@@ -128,5 +66,42 @@ export function showToast(message, type = 'success') {
     default:
       iziToast.error({ ...options, message: 'invalid type of tosat' });
       break;
+  }
+}
+
+async function createNewPage() {
+  debugger;
+  showLoader();
+  try {
+    const { hits: images, totalHits: totalImages } = await getImagesByQuery(
+      searchText,
+      currentPage
+    );
+
+    if (images.length <= 0) {
+      showToast(
+        'Sorry, there are no images matching your search query. Please try again!',
+        'warning'
+      );
+    } else {
+      createGallery(images);
+    }
+
+    const totalPages = Math.ceil(totalImages / ITEMS_PER_PAGE);
+
+    if (currentPage < totalPages) {
+      showLoadMoreButton();
+    } else {
+      hideLoadMoreButton();
+    }
+  } catch (e) {
+    console.log('Error on handleLoadMoreButton', e);
+    showToast(
+      'Sorry, there was an error getting images. Please try again!',
+      'error'
+    );
+    hideLoadMoreButton();
+  } finally {
+    hideLoader();
   }
 }
