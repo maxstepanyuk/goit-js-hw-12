@@ -11,12 +11,17 @@ import {
 
 const form = document.querySelector('.form');
 
+export const ITEMS_PER_PAGE = 15;
+
+let currentPage = 1;
+let searchText = null;
+
 form.addEventListener('submit', onSerchSubmit);
 
 async function onSerchSubmit(event) {
   event.preventDefault();
   const form = event.target;
-  const searchText = form.elements['search-text'].value.trim();
+  searchText = form.elements['search-text'].value.trim();
   if (searchText.length <= 0) {
     showToast('empty search', 'error');
     return;
@@ -24,9 +29,14 @@ async function onSerchSubmit(event) {
 
   clearGallery();
   showLoader();
+  currentPage = 1;
 
   try {
-    const { hits: images } = await getImagesByQuery(searchText);
+    const { hits: images, totalHits: totalImages } = await getImagesByQuery(
+      searchText,
+      currentPage
+    );
+
     if (images.length <= 0) {
       showToast(
         'Sorry, there are no images matching your search query. Please try again!',
@@ -34,6 +44,14 @@ async function onSerchSubmit(event) {
       );
     } else {
       createGallery(images);
+    }
+
+    const totalPages = Math.ceil(totalImages / ITEMS_PER_PAGE);
+
+    if (currentPage < totalPages) {
+      showLoadMoreButton();
+    } else {
+      hideLoadMoreButton();
     }
   } catch (e) {
     console.log('Error on getImagesByQuery', e);
