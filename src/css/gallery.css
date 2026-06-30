@@ -19,7 +19,7 @@
     transform: scale(1.04);
   }
 
-    &:active {
+  &:active {
     box-shadow: 10px 5px 5px #808080;
     transform: scale(0.9);
   }
@@ -52,4 +52,10 @@
 
 .gallery-item-stat-value {
   font-weight: 400;
+}
+
+.section-gallery .container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
