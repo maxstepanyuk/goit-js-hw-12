@@ -13,7 +13,7 @@ const form = document.querySelector('.form');
 
 form.addEventListener('submit', onSerchSubmit);
 
-function onSerchSubmit(event) {
+async function onSerchSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const searchText = form.elements['search-text'].value.trim();
@@ -25,28 +25,25 @@ function onSerchSubmit(event) {
   clearGallery();
   showLoader();
 
-  getImagesByQuery(searchText)
-    .then(responce => {
-      const { hits: images } = responce;
-      if (images.length <= 0) {
-        showToast(
-          'Sorry, there are no images matching your search query. Please try again!',
-          'warning'
-        );
-      } else {
-        createGallery(images);
-      }
-    })
-    .catch(e => {
-      console.log('Error on getImagesByQuery', e);
+  try {
+    const { hits: images } = await getImagesByQuery(searchText);
+    if (images.length <= 0) {
       showToast(
-        'Sorry, there was an error getting images. Please try again!',
-        'error'
+        'Sorry, there are no images matching your search query. Please try again!',
+        'warning'
       );
-    })
-    .finally(() => {
-      hideLoader();
-    });
+    } else {
+      createGallery(images);
+    }
+  } catch (e) {
+    console.log('Error on getImagesByQuery', e);
+    showToast(
+      'Sorry, there was an error getting images. Please try again!',
+      'error'
+    );
+  } finally {
+    hideLoader();
+  }
 }
 
 export function showToast(message, type = 'success') {

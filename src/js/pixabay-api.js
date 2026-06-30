@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = import.meta.env.VITE_API_KEY 
 
-export function getImagesByQuery(query) {
+export async function getImagesByQuery(query) {
   const params = {
     q: query,
     image_type: 'photo',
@@ -12,7 +12,6 @@ export function getImagesByQuery(query) {
     key: API_KEY,
   };
 
-  return axios.get(API_BASE_URL, { params }).then(({ data }) => {
-    return data;
-  });
+  const { data } = await axios.get(API_BASE_URL, { params });
+  return data;
 }
