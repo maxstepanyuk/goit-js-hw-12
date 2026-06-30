@@ -20,6 +20,7 @@ let currentPage = 1;
 let searchText = null;
 
 form.addEventListener('submit', onSerchSubmit);
+loadMoreButton.addEventListener('click', handleLoadMoreButton);
 
 async function onSerchSubmit(event) {
   event.preventDefault();
@@ -62,6 +63,43 @@ async function onSerchSubmit(event) {
       'Sorry, there was an error getting images. Please try again!',
       'error'
     );
+  } finally {
+    hideLoader();
+  }
+}
+
+async function handleLoadMoreButton(event) {
+  currentPage++;
+
+  showLoader();
+
+  try {
+    const { hits: images, totalHits: totalImages } = await getImagesByQuery(
+      searchText,
+      currentPage
+    );
+    if (images.length <= 0) {
+      showToast(
+        'Sorry, there are no images matching your search query. Please try again!',
+        'warning'
+      );
+    } else {
+      createGallery(images);
+    }
+
+    const totalPages = Math.ceil(totalImages / ITEMS_PER_PAGE);
+    if (totalPages > currentPage) {
+      showLoadMoreButton();
+    } else {
+      hideLoadMoreButton();
+    }
+  } catch (e) {
+    console.log('Error on handleLoadMoreButton', e);
+    showToast(
+      'Sorry, there was an error getting images. Please try again!',
+      'error'
+    );
+    hideLoadMoreButton();
   } finally {
     hideLoader();
   }
