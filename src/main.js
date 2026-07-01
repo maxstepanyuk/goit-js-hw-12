@@ -32,7 +32,6 @@ async function onSerchSubmit(event) {
     showToast('empty search', 'error');
     return;
   }
-  debugger;
 
   clearGallery();
   currentPage = 1;
@@ -40,7 +39,6 @@ async function onSerchSubmit(event) {
 }
 
 async function handleLoadMoreButton(event) {
-  debugger;
   currentPage++;
   await createNewPage();
 }
@@ -72,7 +70,6 @@ export function showToast(message, type = 'success') {
 }
 
 async function createNewPage() {
-  debugger;
   showLoader();
   try {
     const { hits: images, totalHits: totalImages } = await getImagesByQuery(
@@ -99,7 +96,7 @@ async function createNewPage() {
       showCantLoadMore();
     }
   } catch (e) {
-    console.log('Error on handleLoadMoreButton', e);
+    console.log('Error on createNewPage', e);
     showToast(
       'Sorry, there was an error getting images. Please try again!',
       'error'
