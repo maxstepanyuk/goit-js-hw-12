@@ -79,7 +79,9 @@ export function showToast(message, type = 'success') {
 }
 
 async function createNewPage() {
+  hideLoadMoreButton()
   showLoader();
+
   try {
     const { hits: images, totalHits: totalImages } = await getImagesByQuery(
       searchText,
