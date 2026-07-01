@@ -79,7 +79,8 @@ export function showToast(message, type = 'success') {
 }
 
 async function createNewPage() {
-  hideLoadMoreButton()
+  hideLoadMoreButton();
+  hideCantLoadMore();
   showLoader();
 
   try {
