@@ -1,10 +1,6 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-
-const loader = document.querySelector('.loader');
-const gallery = document.querySelector('.gallery');
-const cantLoadMore = document.querySelector('.cant-load-more');
-export const loadMoreButton = document.querySelector('.load-more');
+import { refs } from '../main';
 
 const gallerySimpleLightboxOptions = {
   captionsData: 'alt',
@@ -56,35 +52,35 @@ export function createGallery(images) {
     )
     .join('');
 
-  gallery.insertAdjacentHTML('beforeend', markup);
+  refs.gallery.insertAdjacentHTML('beforeend', markup);
 
   lightbox.refresh();
 }
 
 export function clearGallery() {
-  gallery.innerHTML = '';
+  refs.gallery.innerHTML = '';
 }
 
 export function showLoader() {
-  loader.classList.remove('hidden');
+  refs.loader.classList.remove('hidden');
 }
 
 export function hideLoader() {
-  loader.classList.add('hidden');
+  refs.loader.classList.add('hidden');
 }
 
 export function showLoadMoreButton() {
-  loadMoreButton.classList.remove('hidden');
+  refs.loadMoreButton.classList.remove('hidden');
 }
 
 export function hideLoadMoreButton() {
-  loadMoreButton.classList.add('hidden');
+  refs.loadMoreButton.classList.add('hidden');
 }
 
 export function showCantLoadMore() {
-  cantLoadMore.classList.remove('hidden');
+  refs.cantLoadMore.classList.remove('hidden');
 }
 
 export function hideCantLoadMore() {
-  cantLoadMore.classList.add('hidden');
+  refs.cantLoadMore.classList.add('hidden');
 }

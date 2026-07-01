@@ -9,25 +9,30 @@ import {
   hideLoadMoreButton,
   showLoader,
   showLoadMoreButton,
-  loadMoreButton,
   showCantLoadMore,
   hideCantLoadMore,
 } from './js/render-functions';
 
-const form = document.querySelector('.form');
+export const refs = {
+  form: document.querySelector('.form'),
+  loader: document.querySelector('.loader'),
+  gallery: document.querySelector('.gallery'),
+  cantLoadMore: document.querySelector('.cant-load-more'),
+  loadMoreButton: document.querySelector('.load-more'),
+};
 
 export const ITEMS_PER_PAGE = 15;
 
 let currentPage = 1;
 let searchText = null;
 
-form.addEventListener('submit', onSerchSubmit);
-loadMoreButton.addEventListener('click', handleLoadMoreButton);
+refs.form.addEventListener('submit', onSerchSubmit);
+refs.loadMoreButton.addEventListener('click', handleLoadMoreButton);
 
 async function onSerchSubmit(event) {
   event.preventDefault();
-  const form = event.target;
-  searchText = form.elements['search-text'].value.trim();
+  const eForm = event.target;
+  searchText = eForm.elements['search-text'].value.trim();
   if (searchText.length <= 0) {
     showToast('empty search', 'error');
     return;
