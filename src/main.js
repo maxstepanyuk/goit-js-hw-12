@@ -41,6 +41,7 @@ async function onSerchSubmit(event) {
 async function handleLoadMoreButton(event) {
   currentPage++;
   await createNewPage();
+  scrollToNewContent();
 }
 
 export function showToast(message, type = 'success') {
@@ -105,4 +106,19 @@ async function createNewPage() {
   } finally {
     hideLoader();
   }
+}
+
+function scrollToNewContent() {
+  const cardHeight = document
+    .querySelector('.gallery-item')
+    .getBoundingClientRect().height;
+
+  const currentY = window.scrollY;
+
+  const targetY = cardHeight * 2 + currentY;
+
+  window.scrollBy({
+    top: currentY,
+    behavior: 'smooth',
+  });
 }
