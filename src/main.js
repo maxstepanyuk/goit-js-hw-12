@@ -118,7 +118,7 @@ function scrollToNewContent() {
   const targetY = cardHeight * 2 + currentY;
 
   window.scrollBy({
-    top: currentY,
+    top: targetY,
     behavior: 'smooth',
   });
 }
